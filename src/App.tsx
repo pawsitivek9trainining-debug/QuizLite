@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BookOpen, GraduationCap, Users } from 'lucide-react';
-import TeacherLogin from './pages/TeacherLogin';
-import TeacherRegister from './pages/TeacherRegister';
-import TeacherDashboard from './pages/TeacherDashboard';
-import QuizBuilder from './pages/QuizBuilder';
-import QuizEditor from './pages/QuizEditor';
-import MakeQuizLive from './pages/MakeQuizLive';
-import StudentJoinClassroom from './pages/StudentJoinClassroom';
-import StudentDetails from './pages/StudentDetails';
-import StudentQuiz from './pages/StudentQuiz';
-import StudentDone from './pages/StudentDone';
-import TeacherResults from './pages/TeacherResults';
-import StudentLogin from './pages/StudentLogin';
-import NotFound from './pages/NotFound';
+
+const TeacherLogin = lazy(() => import('./pages/TeacherLogin'));
+const TeacherRegister = lazy(() => import('./pages/TeacherRegister'));
+const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard'));
+const QuizBuilder = lazy(() => import('./pages/QuizBuilder'));
+const QuizEditor = lazy(() => import('./pages/QuizEditor'));
+const MakeQuizLive = lazy(() => import('./pages/MakeQuizLive'));
+const StudentJoinClassroom = lazy(() => import('./pages/StudentJoinClassroom'));
+const StudentDetails = lazy(() => import('./pages/StudentDetails'));
+const StudentQuiz = lazy(() => import('./pages/StudentQuiz'));
+const StudentDone = lazy(() => import('./pages/StudentDone'));
+const TeacherResults = lazy(() => import('./pages/TeacherResults'));
+const StudentLogin = lazy(() => import('./pages/StudentLogin'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -28,20 +29,27 @@ function App() {
 
   const renderPage = () => {
     if (currentPath === '/') return <HomePage />;
-    if (currentPath === '/teacher/login') return <TeacherLogin />;
-    if (currentPath === '/teacher/register') return <TeacherRegister />;
-    if (currentPath === '/teacher/dashboard') return <TeacherDashboard />;
-    if (currentPath === '/teacher/quizzes/new') return <QuizBuilder />;
-    if (currentPath.startsWith('/teacher/quizzes/') && currentPath.endsWith('/edit')) return <QuizEditor />;
-    if (currentPath === '/teacher/live') return <MakeQuizLive />;
-    if (currentPath.startsWith('/teacher/results/')) return <TeacherResults />;
-    if (currentPath === '/student/login') return <StudentLogin />;
-    if (currentPath === '/student/classroom') return <StudentJoinClassroom />;
-    if (currentPath === '/student/details') return <StudentDetails />;
-    if (currentPath.startsWith('/student/quiz/')) return <StudentQuiz />;
-    if (currentPath === '/student/done') return <StudentDone />;
 
-    return <NotFound />;
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center"><div className="text-lg text-gray-600">Loading...</div></div>}>
+        {currentPath === '/teacher/login' && <TeacherLogin />}
+        {currentPath === '/teacher/register' && <TeacherRegister />}
+        {currentPath === '/teacher/dashboard' && <TeacherDashboard />}
+        {currentPath === '/teacher/quizzes/new' && <QuizBuilder />}
+        {currentPath.startsWith('/teacher/quizzes/') && currentPath.endsWith('/edit') && <QuizEditor />}
+        {currentPath === '/teacher/live' && <MakeQuizLive />}
+        {currentPath.startsWith('/teacher/results/') && <TeacherResults />}
+        {currentPath === '/student/login' && <StudentLogin />}
+        {currentPath === '/student/classroom' && <StudentJoinClassroom />}
+        {currentPath === '/student/details' && <StudentDetails />}
+        {currentPath.startsWith('/student/quiz/') && <StudentQuiz />}
+        {currentPath === '/student/done' && <StudentDone />}
+        {!['/', '/teacher/login', '/teacher/register', '/teacher/dashboard', '/teacher/quizzes/new', '/teacher/live', '/student/login', '/student/classroom', '/student/details', '/student/done'].includes(currentPath) &&
+         !currentPath.startsWith('/teacher/quizzes/') &&
+         !currentPath.startsWith('/teacher/results/') &&
+         !currentPath.startsWith('/student/quiz/') && <NotFound />}
+      </Suspense>
+    );
   };
 
   return renderPage();
