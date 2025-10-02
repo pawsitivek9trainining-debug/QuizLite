@@ -11,6 +11,7 @@ import StudentQuiz from './pages/StudentQuiz';
 import StudentDone from './pages/StudentDone';
 import TeacherResults from './pages/TeacherResults';
 import StudentLogin from './pages/StudentLogin';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -25,6 +26,7 @@ function App() {
   }, []);
 
   const renderPage = () => {
+    if (currentPath === '/') return <HomePage />;
     if (currentPath === '/teacher/login') return <TeacherLogin />;
     if (currentPath === '/teacher/register') return <TeacherRegister />;
     if (currentPath === '/teacher/dashboard') return <TeacherDashboard />;
@@ -38,7 +40,7 @@ function App() {
     if (currentPath.startsWith('/student/quiz/')) return <StudentQuiz />;
     if (currentPath === '/student/done') return <StudentDone />;
 
-    return <HomePage />;
+    return <NotFound />;
   };
 
   return renderPage();
