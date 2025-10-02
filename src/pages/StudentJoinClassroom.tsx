@@ -57,6 +57,3 @@ function StudentJoinClassroom() {
 }
 
 export default StudentJoinClassroom;
-
-
-export default StudentJoinClassroom
