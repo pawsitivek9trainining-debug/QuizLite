@@ -7,6 +7,7 @@ import QuizEditor from './pages/QuizEditor';
 import MakeQuizLive from './pages/MakeQuizLive';
 import StudentJoinClassroom from './pages/StudentJoinClassroom';
 import StudentDetails from './pages/StudentDetails';
+import StudentQuiz from './pages/StudentQuiz';
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -29,6 +30,7 @@ function App() {
     if (currentPath === '/teacher/live') return <MakeQuizLive />;
     if (currentPath === '/student/classroom') return <StudentJoinClassroom />;
     if (currentPath === '/student/details') return <StudentDetails />;
+    if (currentPath.startsWith('/student/quiz/')) return <StudentQuiz />;
 
     return <HomePage />;
   };
