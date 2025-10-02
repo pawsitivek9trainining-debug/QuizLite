@@ -7,6 +7,8 @@ function TeacherRegister() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log({ email, password });
+    window.history.pushState({}, '', '/teacher/dashboard');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (
@@ -63,7 +65,15 @@ function TeacherRegister() {
 
         <p className="text-sm text-gray-600 text-center">
           Already have an account?{' '}
-          <a href="/teacher/login" className="text-blue-600 hover:text-blue-700 font-medium hover:underline">
+          <a
+            href="/teacher/login"
+            onClick={(e) => {
+              e.preventDefault();
+              window.history.pushState({}, '', '/teacher/login');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
+            className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+          >
             Login
           </a>
         </p>

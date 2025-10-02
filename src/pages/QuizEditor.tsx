@@ -98,10 +98,13 @@ function QuizEditor() {
 
   const handleSaveChanges = () => {
     console.log({ title, description, classroom, questions });
+    window.history.pushState({}, '', '/teacher/dashboard');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   const handleBackToDashboard = () => {
-    window.location.href = '/teacher/dashboard';
+    window.history.pushState({}, '', '/teacher/dashboard');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (

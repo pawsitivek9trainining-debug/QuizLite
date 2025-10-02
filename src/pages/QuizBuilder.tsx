@@ -79,7 +79,8 @@ function QuizBuilder() {
 
   const handleSaveAndExit = () => {
     console.log({ title, description, classroom, questions });
-    window.location.href = '/teacher/dashboard';
+    window.history.pushState({}, '', '/teacher/dashboard');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (

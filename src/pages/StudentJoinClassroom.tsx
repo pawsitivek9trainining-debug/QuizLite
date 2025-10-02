@@ -6,7 +6,8 @@ function StudentJoinClassroom() {
 
   const handleNext = () => {
     if (classroomName.trim()) {
-      window.location.href = '/student/details';
+      window.history.pushState({}, '', '/student/details');
+      window.dispatchEvent(new PopStateEvent('popstate'));
     }
   };
 
@@ -56,3 +57,6 @@ function StudentJoinClassroom() {
 }
 
 export default StudentJoinClassroom;
+
+
+export default StudentJoinClassroom

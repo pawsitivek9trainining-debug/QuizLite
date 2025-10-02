@@ -19,7 +19,8 @@ function MakeQuizLive() {
   };
 
   const handleOpenMonitor = () => {
-    window.location.href = '/teacher/results/123';
+    window.history.pushState({}, '', '/teacher/results/123');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   if (isLive) {

@@ -46,10 +46,22 @@ function TeacherDashboard() {
                       <td className="py-3 px-2 text-gray-500">{quiz.updated}</td>
                       <td className="py-3 px-2">
                         <div className="flex justify-end gap-2">
-                          <button className="px-3 py-1 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition">
+                          <button
+                            onClick={() => {
+                              window.history.pushState({}, '', `/teacher/quizzes/${quiz.id}/edit`);
+                              window.dispatchEvent(new PopStateEvent('popstate'));
+                            }}
+                            className="px-3 py-1 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded transition"
+                          >
                             Edit
                           </button>
-                          <button className="px-3 py-1 text-xs font-medium text-green-600 hover:text-green-700 hover:bg-green-50 rounded transition">
+                          <button
+                            onClick={() => {
+                              window.history.pushState({}, '', '/teacher/live');
+                              window.dispatchEvent(new PopStateEvent('popstate'));
+                            }}
+                            className="px-3 py-1 text-xs font-medium text-green-600 hover:text-green-700 hover:bg-green-50 rounded transition"
+                          >
                             Make Live
                           </button>
                           <button className="px-3 py-1 text-xs font-medium text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded transition">
@@ -68,6 +80,11 @@ function TeacherDashboard() {
             <h2 className="text-xl font-semibold text-gray-900">Create New Quiz</h2>
             <a
               href="/teacher/quizzes/new"
+              onClick={(e) => {
+                e.preventDefault();
+                window.history.pushState({}, '', '/teacher/quizzes/new');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }}
               className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
             >
               <Plus size={24} />
