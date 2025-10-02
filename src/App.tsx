@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BookOpen, GraduationCap, Users } from 'lucide-react';
 import TeacherLogin from './pages/TeacherLogin';
 import TeacherRegister from './pages/TeacherRegister';
 import TeacherDashboard from './pages/TeacherDashboard';
@@ -65,13 +66,28 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center px-4">
       <div className="max-w-2xl w-full py-16 space-y-10">
-        <div className="space-y-3">
-          <h1 className="text-4xl font-bold text-center text-gray-900">
-            QuizLite
-          </h1>
-          <p className="text-lg text-gray-600 text-center">
-            Create, run, and review classroom quizzes.
-          </p>
+        <div className="space-y-6">
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="w-28 h-28 bg-blue-600 rounded-3xl flex items-center justify-center transform rotate-3 shadow-xl">
+                <BookOpen className="w-14 h-14 text-white" strokeWidth={2.5} />
+              </div>
+              <div className="absolute -top-2 -right-2 w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                <GraduationCap className="w-7 h-7 text-white" />
+              </div>
+              <div className="absolute -bottom-2 -left-2 w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                <Users className="w-7 h-7 text-white" />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <h1 className="text-5xl font-bold text-center text-gray-900">
+              QuizLite
+            </h1>
+            <p className="text-lg text-gray-600 text-center">
+              Create, run, and review classroom quizzes.
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col items-center space-y-4">
@@ -112,3 +128,5 @@ function HomePage() {
 }
 
 export default App;
+
+export default App
