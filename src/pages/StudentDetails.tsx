@@ -1,15 +1,36 @@
 import { useState } from 'react';
 import { Home } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 function StudentDetails() {
   const [srNo, setSrNo] = useState('');
   const [name, setName] = useState('');
   const [rank, setRank] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleContinue = () => {
-    console.log({ srNo, name, rank });
-    window.history.pushState({}, '', '/student/quiz/123');
-    window.dispatchEvent(new PopStateEvent('popstate'));
+  const handleContinue = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Store student info in localStorage for this session
+      const studentInfo = { srNo, name, rank };
+      localStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+
+      // You can also store in Supabase if needed
+      // const { error } = await supabase
+      //   .from('student_sessions')
+      //   .insert([{ sr_no: srNo, name, rank }]);
+      // if (error) throw error;
+
+      window.history.pushState({}, '', '/student/quiz/123');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save details');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBack = () => {
@@ -86,6 +107,12 @@ function StudentDetails() {
             />
           </div>
 
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           <div className="flex gap-3 pt-2">
             <button
               type="button"
@@ -96,9 +123,10 @@ function StudentDetails() {
             </button>
             <button
               type="submit"
-              className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+              disabled={loading}
+              className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             >
-              Continue
+              {loading ? 'Saving...' : 'Continue'}
             </button>
           </div>
         </form>

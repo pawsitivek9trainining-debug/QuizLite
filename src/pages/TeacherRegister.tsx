@@ -1,15 +1,35 @@
 import { useState, FormEvent } from 'react';
 import { Home } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 function TeacherRegister() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
-    window.history.pushState({}, '', '/teacher/dashboard');
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        window.history.pushState({}, '', '/teacher/dashboard');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create account');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,11 +86,18 @@ function TeacherRegister() {
             />
           </div>
 
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+            disabled={loading}
+            className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 disabled:transform-none"
           >
-            Create Account
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
