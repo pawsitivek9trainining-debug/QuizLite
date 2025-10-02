@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, ArrowLeft } from 'lucide-react';
+import { Download, ArrowLeft, Home } from 'lucide-react';
 
 interface Submission {
   srNo: string;
@@ -80,8 +80,18 @@ function TeacherResults() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100">
       <div className="max-w-5xl mx-auto py-12 px-4 space-y-8">
-        <div>
+        <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">Live Session</h1>
+          <button
+            onClick={() => {
+              window.history.pushState({}, '', '/');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
+            className="p-2 text-gray-600 hover:text-gray-800 hover:bg-white rounded-lg transition-all"
+            title="Home"
+          >
+            <Home size={20} />
+          </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">

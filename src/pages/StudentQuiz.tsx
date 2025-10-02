@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 
 type QuestionType = 'MCQ' | 'True-False' | 'Short';
 
@@ -114,9 +114,21 @@ function StudentQuiz() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100">
       <div className="max-w-3xl mx-auto py-12 px-4 space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Quiz</h1>
-          <p className="text-sm text-gray-600 mt-1">Classroom: Algebra 101</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Quiz</h1>
+            <p className="text-sm text-gray-600 mt-1">Classroom: Algebra 101</p>
+          </div>
+          <button
+            onClick={() => {
+              window.history.pushState({}, '', '/');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
+            className="p-2 text-gray-600 hover:text-gray-800 hover:bg-white rounded-lg transition-all"
+            title="Home"
+          >
+            <Home size={20} />
+          </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-8 space-y-6">

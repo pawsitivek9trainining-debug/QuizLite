@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus, Home, LogOut } from 'lucide-react';
 
 function TeacherDashboard() {
   const dummyQuizzes = [
@@ -10,7 +10,33 @@ function TeacherDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100">
       <div className="max-w-5xl mx-auto py-12 px-4 space-y-10">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                window.history.pushState({}, '', '/');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }}
+              className="p-2 text-gray-600 hover:text-gray-800 hover:bg-white rounded-lg transition-all flex items-center gap-2 px-4"
+              title="Home"
+            >
+              <Home size={20} />
+              <span className="text-sm font-medium">Home</span>
+            </button>
+            <button
+              onClick={() => {
+                window.history.pushState({}, '', '/teacher/login');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }}
+              className="p-2 text-gray-600 hover:text-gray-800 hover:bg-white rounded-lg transition-all flex items-center gap-2 px-4"
+              title="Logout"
+            >
+              <LogOut size={20} />
+              <span className="text-sm font-medium">Logout</span>
+            </button>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">

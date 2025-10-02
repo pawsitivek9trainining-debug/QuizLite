@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users } from 'lucide-react';
+import { Users, Home } from 'lucide-react';
 
 function StudentJoinClassroom() {
   const [classroomName, setClassroomName] = useState('');
@@ -18,7 +18,17 @@ function StudentJoinClassroom() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-6">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-6 relative">
+        <button
+          onClick={() => {
+            window.history.pushState({}, '', '/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+          }}
+          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+          title="Home"
+        >
+          <Home size={20} />
+        </button>
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-2">
             <Users className="w-8 h-8 text-emerald-600" />

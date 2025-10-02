@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import { Home } from 'lucide-react';
 
 function TeacherLogin() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,17 @@ function TeacherLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6 relative">
+        <button
+          onClick={() => {
+            window.history.pushState({}, '', '/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+          }}
+          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+          title="Home"
+        >
+          <Home size={20} />
+        </button>
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-center text-gray-900">
             Teacher Login
